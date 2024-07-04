@@ -5,18 +5,22 @@ import { Customers, CustomerResponse } from '../../interfaces/customers';
 import { ToastComponent } from '../../common/toast/toast.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { EncryptionService } from '../../services/encryption.service';
 import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer/modal-delete-customer.component";
 import { ModalAddCustomerComponent } from "../../common/modal-add-customer/modal-add-customer.component";
 import { ModalUpdateCustomerComponent } from "../../common/modal-update-customer/modal-update-customer.component";
-
 
 @Component({
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent, ModalAddCustomerComponent, ModalUpdateCustomerComponent]
+    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent, ModalAddCustomerComponent, ModalUpdateCustomerComponent, FormsModule, ReactiveFormsModule, ],
+    providers: [DecimalPipe],
 })
 export class HomeComponent implements OnInit {
   @ViewChild(ToastComponent)
@@ -25,8 +29,11 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = true;
   selectedCustomer: any;
   customers: Customers[] = [];
+  filteredCustomers: Customers[] = [];
+  filter: string = '';
 
-  constructor(private apiService: ApiService, private router: Router, private modalService: NgbModal, private encryptionService: EncryptionService ){}
+
+  constructor(private apiService: ApiService, private router: Router, private modalService: NgbModal, private encryptionService: EncryptionService, private decimalPipe: DecimalPipe  ){}
 
   ngOnInit(): void {
     this.getCustomers();
@@ -37,7 +44,7 @@ export class HomeComponent implements OnInit {
     try{
       const response: CustomerResponse = await this.apiService.getCustomers();
       this.customers = response.data;
-      console.log(this.customers);
+      this.filteredCustomers = this.customers;
     }
     catch(error){
       console.log(error);
@@ -45,6 +52,22 @@ export class HomeComponent implements OnInit {
     finally{
       this.isLoading = false;
     }
+  }
+
+  searchCustomers(): void {
+    if (!this.filter) {
+      this.filteredCustomers = this.customers;
+      return;
+    }
+
+    const searchTerm = this.filter.toLowerCase();
+
+    this.filteredCustomers = this.customers.filter((customer) =>
+      customer.first_name.toLowerCase().includes(searchTerm) ||
+      customer.last_name.toLowerCase().includes(searchTerm) ||
+      customer.email.toLowerCase().includes(searchTerm) ||
+      customer.contact_number.toString().includes(searchTerm)
+    );
   }
 
   //Show Customer by ID
@@ -86,5 +109,6 @@ export class HomeComponent implements OnInit {
     this.getCustomers();
     this.toast.showToast('Success', 'Customer updated successfully', 'success');
   }
+
   
 }
