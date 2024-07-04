@@ -9,7 +9,7 @@
 <div class="container pt-4">
     <div class="d-flex justify-content-between align-items-center">
         <div class="h2">Customer Management Software</div>
-        <button class="btn btn-primary" (click)="addCustomer()">Add Customer <i class="bi bi-plus"></i></button>
+        <button class="btn btn-primary" (click)="addCustomer(storeCustomer)">Add Customer <i class="bi bi-plus"></i></button>
     </div>
     <table class="table table-hover mt-4">
         <thead>
@@ -39,11 +39,17 @@
     </table>
 </div>
 
-<!--MODAL-->
-
+<!--DELETE CUSTOMER MODAL-->
 <ng-template #destroyCustomer let-modal>
     <app-modal-delete-customer [customer]="selectedCustomer" (customerDeleted)="onCustomerDeleted()"/>
 </ng-template>
+
+<!--ADD CUSTOMER MODAL-->
+<ng-template #storeCustomer let-modal>
+    <app-modal-add-customer (customerAdded)="onCustomerAdded()"/>
+</ng-template>
+
+
 
 <app-toast/>
 

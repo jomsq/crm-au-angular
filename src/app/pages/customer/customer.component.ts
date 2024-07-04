@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
     first_name: '',
     last_name: '',
     email: '',
-    contact_number: 0
+    contact_number: ''
   }
 
   constructor(private apiService: ApiService,  private router: Router, private route: ActivatedRoute, private encryptionService: EncryptionService){}

@@ -83,7 +83,7 @@ export class ApiService {
   }
 
   //Add Customer
-  async addCustomer(customer: any ): Promise<CustomerResponse> {
+  async addCustomer(customer: any ): Promise<CustomersResponse> {
     return this.postRequest(`customer/add`, customer);
   }
 

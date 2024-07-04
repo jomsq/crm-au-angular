@@ -3,7 +3,7 @@ export interface Customers {
     first_name: string,
     last_name: string,
     email: string,
-    contact_number: number
+    contact_number: string
 }
 
 export interface CustomerResponse {

@@ -5,7 +5,7 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class EncryptionService {
-  private secretKey = 'CRMAUSTRALIA'; // Replace with your secret key
+  private secretKey = 'CRMAUSTRALIA';
 
   constructor() { }
 

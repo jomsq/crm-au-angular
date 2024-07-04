@@ -7,6 +7,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { EncryptionService } from '../../services/encryption.service';
 import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer/modal-delete-customer.component";
+import { ModalAddCustomerComponent } from "../../common/modal-add-customer/modal-add-customer.component";
 
 
 @Component({
@@ -14,7 +15,7 @@ import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent]
+    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent, ModalAddCustomerComponent]
 })
 export class HomeComponent implements OnInit {
   @ViewChild(ToastComponent)
@@ -63,7 +64,8 @@ export class HomeComponent implements OnInit {
   }
 
   //Add Customer
-  addCustomer(){
+  addCustomer(content: TemplateRef<any>){
+    this.modalService.open(content, { centered: true });
     console.log("Add Customer Works");
   }
 
@@ -71,6 +73,11 @@ export class HomeComponent implements OnInit {
   onCustomerDeleted(){
     this.getCustomers();
     this.toast.showToast('Deleted', 'Customer deleted successfully', 'error');
+  }
+
+  onCustomerAdded(){
+    this.getCustomers();
+    this.toast.showToast('Success', 'Customer added successfully', 'success');
   }
   
 }
