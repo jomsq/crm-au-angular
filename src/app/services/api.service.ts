@@ -78,7 +78,7 @@ export class ApiService {
   }
 
   //Update Customer
-  async updateCustomer(id: number, customer: any ): Promise<CustomerResponse> {
+  async updateCustomer(id: number, customer: any ): Promise<CustomersResponse> {
     return this.putRequest(`customer/update/${id}`, customer);
   }
 

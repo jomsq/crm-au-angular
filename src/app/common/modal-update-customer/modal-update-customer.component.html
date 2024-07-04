@@ -1,0 +1,43 @@
+<form (ngSubmit)="updateCustomer(updateCustomerForm, customer)" #updateCustomerForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Add Customer</h4>
+        <button type="button" class="btn-close" (click)="closeModal()"  aria-label="Close" ></button>
+    </div>
+
+    <div class="row p-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 pt-2">
+            <input type="text" id="first_name" name="first_name" class="form-control bg-light" placeholder="First Name" [(ngModel)]="customer.first_name" required/>
+            <small *ngIf="updateCustomerForm.submitted && !updateCustomerForm.controls['first_name']?.valid" class="text-danger">
+                First Name is required
+            </small>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 pt-2">
+            <input type="text" id="last_name" name="last_name" class="form-control bg-light" placeholder="Last Name" [(ngModel)]="customer.last_name" required/>
+            <small *ngIf="updateCustomerForm.submitted && !updateCustomerForm.controls['last_name']?.valid" class="text-danger">
+                Last Name is required
+            </small>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 pt-2">
+            <input type="text" id="email" name="email" class="form-control bg-light" placeholder="Email Address" [(ngModel)]="customer.email" required email/>
+            <small *ngIf="updateCustomerForm.submitted && !updateCustomerForm.controls['email']?.valid" class="text-danger">
+                A valid email is required
+            </small>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 pt-2">
+            <input type="text" id="contact_number" name="contact_number" class="form-control bg-light" placeholder="Contact Number" [(ngModel)]="customer.contact_number" required pattern="^[0-9]{11}$"/>
+            <small *ngIf="updateCustomerForm.submitted && !updateCustomerForm.controls['contact_number']?.valid" class="text-danger">
+                Contact number must be numeric and 11 digits
+            </small>
+        </div>
+    </div>
+
+    <div class="row p-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 d-grid gap-2">
+            <button class="btn btn-block btn-primary">Update</button> 
+        </div>
+    </div>
+
+</form>

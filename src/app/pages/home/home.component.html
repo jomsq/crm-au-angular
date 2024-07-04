@@ -31,7 +31,7 @@
                 <td class="align-middle">{{customer.contact_number}}</td>
                 <td class="text-end">
                     <button class="btn btn-primary mx-1" (click)="showCustomer(customer.id)">View</button>
-                    <button class="btn btn-warning mx-1" (click)="editCustomer(customer.id)">Edit <i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-warning mx-1" (click)="editCustomer(updateCustomer, customer)">Edit <i class="bi bi-pencil"></i></button>
                     <button class="btn btn-danger mx-1" (click)="deleteCustomer(destroyCustomer, customer)">Delete <i class="bi bi-trash"></i> </button>
                 </td>
             </tr>
@@ -49,7 +49,11 @@
     <app-modal-add-customer (customerAdded)="onCustomerAdded()"/>
 </ng-template>
 
+<!--UPDATE CUSTOMER MODAL-->
+<ng-template #updateCustomer let-modal>
+    <app-modal-update-customer [customer]="selectedCustomer" (customerUpdated)="onCustomerUpdated()"/>
+</ng-template>
 
-
+<!--TOAST COMPONENT-->
 <app-toast/>
 

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { EncryptionService } from '../../services/encryption.service';
 import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer/modal-delete-customer.component";
 import { ModalAddCustomerComponent } from "../../common/modal-add-customer/modal-add-customer.component";
+import { ModalUpdateCustomerComponent } from "../../common/modal-update-customer/modal-update-customer.component";
 
 
 @Component({
@@ -15,7 +16,7 @@ import { ModalAddCustomerComponent } from "../../common/modal-add-customer/modal
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent, ModalAddCustomerComponent]
+    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent, ModalAddCustomerComponent, ModalUpdateCustomerComponent]
 })
 export class HomeComponent implements OnInit {
   @ViewChild(ToastComponent)
@@ -53,8 +54,9 @@ export class HomeComponent implements OnInit {
   }
 
   //Edit Customer
-  editCustomer(id: number){
-    console.log(id);
+  editCustomer(content: TemplateRef<any>, customer: any){
+    this.modalService.open(content, { centered: true });
+    this.selectedCustomer = customer;
   }
 
   //Delete Customer
@@ -78,6 +80,11 @@ export class HomeComponent implements OnInit {
   onCustomerAdded(){
     this.getCustomers();
     this.toast.showToast('Success', 'Customer added successfully', 'success');
+  }
+
+  onCustomerUpdated(){
+    this.getCustomers();
+    this.toast.showToast('Success', 'Customer updated successfully', 'success');
   }
   
 }
