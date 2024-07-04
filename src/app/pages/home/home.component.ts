@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, viewChild, ViewChild } from '@angular/core';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
 import { Customers, CustomerResponse } from '../../interfaces/customers';
+import { ToastComponent } from '../../common/toast/toast.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer/modal-delete-customer.component";
 
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [NgFor, NgIf],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    imports: [NgFor, NgIf, ModalDeleteCustomerComponent, ToastComponent]
 })
 export class HomeComponent implements OnInit {
+  @ViewChild(ToastComponent)
+  toast: ToastComponent = new ToastComponent();
 
   isLoading: boolean = true;
+  selectedCustomer: any;
   customers: Customers[] = [];
 
-  constructor(private apiService: ApiService, private router: Router){}
+  constructor(private apiService: ApiService, private router: Router, private modalService: NgbModal ){}
 
   ngOnInit(): void {
     this.getCustomers();
@@ -49,13 +55,20 @@ export class HomeComponent implements OnInit {
   }
 
   //Delete Customer
-  deleteCustomer(id: number){
-    console.log(id);
+  deleteCustomer(content: TemplateRef<any>, customer: any){
+    this.modalService.open(content, { centered: true });
+    this.selectedCustomer = customer;
   }
 
   //Add Customer
   addCustomer(){
     console.log("Add Customer Works");
+  }
+
+  
+  onCustomerDeleted(){
+    this.getCustomers();
+    this.toast.showToast('Deleted', 'Customer deleted successfully', 'error');
   }
   
 }

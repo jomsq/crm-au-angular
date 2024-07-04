@@ -73,7 +73,7 @@ export class ApiService {
   }
 
   //Delete Customer
-  async deleteCustomer(id: number): Promise<CustomerResponse> {
+  async deleteCustomer(id: number): Promise<CustomersResponse> {
     return this.deleteRequest(`customer/delete/${id}`);
   }
 
