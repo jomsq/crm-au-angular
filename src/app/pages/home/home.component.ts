@@ -5,6 +5,7 @@ import { Customers, CustomerResponse } from '../../interfaces/customers';
 import { ToastComponent } from '../../common/toast/toast.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { EncryptionService } from '../../services/encryption.service';
 import { ModalDeleteCustomerComponent } from "../../common/modal-delete-customer/modal-delete-customer.component";
 
 
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   selectedCustomer: any;
   customers: Customers[] = [];
 
-  constructor(private apiService: ApiService, private router: Router, private modalService: NgbModal ){}
+  constructor(private apiService: ApiService, private router: Router, private modalService: NgbModal, private encryptionService: EncryptionService ){}
 
   ngOnInit(): void {
     this.getCustomers();
@@ -45,8 +46,9 @@ export class HomeComponent implements OnInit {
   }
 
   //Show Customer by ID
-  showCustomer(id: number) {
-   this.router.navigate(['/customer', id]);
+  showCustomer(id: any) {
+    const encryptedID = this.encryptionService.encrypt(id.toString());
+    this.router.navigate(['/customer', encryptedID]);
   }
 
   //Edit Customer

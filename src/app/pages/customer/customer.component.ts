@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { EncryptionService } from '../../services/encryption.service';
 import { NgIf } from '@angular/common';
 import { Customers, CustomerResponse, CustomersResponse } from '../../interfaces/customers';
 
@@ -25,10 +26,11 @@ export class CustomerComponent implements OnInit {
     contact_number: 0
   }
 
-  constructor(private apiService: ApiService,  private router: Router, private route: ActivatedRoute){}
+  constructor(private apiService: ApiService,  private router: Router, private route: ActivatedRoute, private encryptionService: EncryptionService){}
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      this.id = this.encryptionService.decrypt(this.id);
     });
 
     this.getCustomerbyID();
