@@ -10,3 +10,9 @@ export interface CustomerResponse {
     success: boolean,
     data: Customers []
 }
+
+export interface CustomersResponse {
+    success: boolean,
+    data: Customers 
+}
+

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Customers, CustomerResponse } from '../../interfaces/customers';
 import { NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = true;
   customers: Customers[] = [];
 
-  constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService, private router: Router){}
 
   ngOnInit(): void {
     this.getCustomers();
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   //Show Customer by ID
   showCustomer(id: number) {
-   console.log(id);
+   this.router.navigate(['/customer', id]);
   }
 
   //Edit Customer

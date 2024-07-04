@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { CustomerResponse } from '../interfaces/customers';
+import { CustomerResponse, CustomersResponse } from '../interfaces/customers';
 
 @Injectable({
   providedIn: 'root'
@@ -88,8 +88,10 @@ export class ApiService {
   }
 
   //Show Customer by ID
-  async showCustomer(id: number): Promise<CustomerResponse> {
+  async showCustomer(id: number): Promise<CustomersResponse> {
     return this.getRequest(`customer/${id}`);
   }
+
+
 
 }
